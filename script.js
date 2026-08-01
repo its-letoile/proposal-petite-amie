@@ -6,6 +6,25 @@ let audioCtx = null;
 let musicInterval = null;
 let musicStarted = false;
 
+// --- BLOCK ALL ZOOM (pinch, double-tap, gesture) on mobile ---
+// Prevent pinch-to-zoom on iOS Safari (gesturestart/gesturechange)
+document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+
+// Prevent multi-finger zoom on all mobile browsers
+document.addEventListener('touchmove', function(e) {
+  if (e.touches.length > 1) { e.preventDefault(); }
+}, { passive: false });
+
+// Prevent double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) { e.preventDefault(); }
+  lastTouchEnd = now;
+}, { passive: false });
+
 // DOM Elements
 const btnOui = document.getElementById('btn-oui');
 const btnNon = document.getElementById('btn-non');
