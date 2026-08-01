@@ -239,33 +239,30 @@ function dodgeNonButton(e) {
 
   btnNon.classList.add('evasive');
 
+  // ULTRA-STRICT: Use a hard percentage-based safe zone in the CENTER of the screen.
+  // This guarantees the button is ALWAYS visible, even in in-app browsers 
+  // (Instagram, Snapchat, Safari, Chrome) with large top/bottom bars.
+  // Safe zone: 10%-85% horizontally, 15%-50% vertically (never near edges)
+  const screenW = document.documentElement.clientWidth;
+  const screenH = document.documentElement.clientHeight;
+
   const btnWidth = btnNon.offsetWidth || 100;
   const btnHeight = btnNon.offsetHeight || 48;
-  
-  // Use visualViewport for accurate in-app browser dimensions (Instagram, Safari, etc.)
-  const vw = (window.visualViewport ? window.visualViewport.width : window.innerWidth);
-  const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
-  const offsetTop = (window.visualViewport ? window.visualViewport.offsetTop : 0);
-  const offsetLeft = (window.visualViewport ? window.visualViewport.offsetLeft : 0);
-  
-  // Very large safe margins for in-app browsers with toolbars/notches
-  const safeTop = 100 + offsetTop;
-  const safeBottom = 120;
-  const safeLeft = 20 + offsetLeft;
-  const safeRight = 20;
 
-  const minX = safeLeft;
-  const maxX = Math.max(minX + 10, vw - btnWidth - safeRight);
-  
-  const minY = safeTop;
-  const maxY = Math.max(minY + 10, vh - btnHeight - safeBottom);
+  // Hard pixel limits - the button MUST stay in this box
+  const LEFT_MIN = Math.round(screenW * 0.05);
+  const LEFT_MAX = Math.round(screenW * 0.85) - btnWidth;
+  const TOP_MIN  = Math.round(screenH * 0.15);
+  const TOP_MAX  = Math.round(screenH * 0.50);
 
-  let randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
-  let randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+  // Ensure max > min even on tiny screens
+  const safeLeftMin = Math.max(10, LEFT_MIN);
+  const safeLeftMax = Math.max(safeLeftMin + 20, LEFT_MAX);
+  const safeTopMin  = Math.max(50, TOP_MIN);
+  const safeTopMax  = Math.max(safeTopMin + 20, TOP_MAX);
 
-  // Final safety clamp
-  randomX = Math.max(10, Math.min(randomX, vw - btnWidth - 10));
-  randomY = Math.max(60, Math.min(randomY, vh - btnHeight - 100));
+  const randomX = Math.floor(Math.random() * (safeLeftMax - safeLeftMin)) + safeLeftMin;
+  const randomY = Math.floor(Math.random() * (safeTopMax - safeTopMin)) + safeTopMin;
 
   btnNon.style.position = 'fixed';
   btnNon.style.left = `${randomX}px`;
