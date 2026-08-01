@@ -239,22 +239,33 @@ function dodgeNonButton(e) {
 
   btnNon.classList.add('evasive');
 
-  const btnWidth = btnNon.offsetWidth || 90;
-  const btnHeight = btnNon.offsetHeight || 44;
+  const btnWidth = btnNon.offsetWidth || 100;
+  const btnHeight = btnNon.offsetHeight || 48;
   
-  // Safe margins for mobile viewports (keeping away from status bar, notch & navigation bar)
-  const paddingX = 24;
-  const paddingTop = 70;
-  const paddingBottom = 75;
-
-  const minX = paddingX;
-  const maxX = Math.max(minX, window.innerWidth - btnWidth - paddingX);
+  // Use visualViewport for accurate in-app browser dimensions (Instagram, Safari, etc.)
+  const vw = (window.visualViewport ? window.visualViewport.width : window.innerWidth);
+  const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+  const offsetTop = (window.visualViewport ? window.visualViewport.offsetTop : 0);
+  const offsetLeft = (window.visualViewport ? window.visualViewport.offsetLeft : 0);
   
-  const minY = paddingTop;
-  const maxY = Math.max(minY, window.innerHeight - btnHeight - paddingBottom);
+  // Very large safe margins for in-app browsers with toolbars/notches
+  const safeTop = 100 + offsetTop;
+  const safeBottom = 120;
+  const safeLeft = 20 + offsetLeft;
+  const safeRight = 20;
 
-  const randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
-  const randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+  const minX = safeLeft;
+  const maxX = Math.max(minX + 10, vw - btnWidth - safeRight);
+  
+  const minY = safeTop;
+  const maxY = Math.max(minY + 10, vh - btnHeight - safeBottom);
+
+  let randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
+  let randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+
+  // Final safety clamp
+  randomX = Math.max(10, Math.min(randomX, vw - btnWidth - 10));
+  randomY = Math.max(60, Math.min(randomY, vh - btnHeight - 100));
 
   btnNon.style.position = 'fixed';
   btnNon.style.left = `${randomX}px`;
