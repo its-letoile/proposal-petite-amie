@@ -362,7 +362,9 @@ html, body {
 
 .btn-non.evasive {
   position: fixed !important;
-  z-index: 999;
+  z-index: 9999 !important;
+  max-width: calc(100vw - 32px);
+  touch-action: manipulation;
 }
 
 /* Pleading Text */

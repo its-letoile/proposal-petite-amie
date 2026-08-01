@@ -239,18 +239,27 @@ function dodgeNonButton(e) {
 
   btnNon.classList.add('evasive');
 
-  const btnWidth = btnNon.offsetWidth || 100;
-  const btnHeight = btnNon.offsetHeight || 40;
-  const padding = 20;
+  const btnWidth = btnNon.offsetWidth || 90;
+  const btnHeight = btnNon.offsetHeight || 44;
+  
+  // Safe margins for mobile viewports (keeping away from status bar, notch & navigation bar)
+  const paddingX = 24;
+  const paddingTop = 70;
+  const paddingBottom = 75;
 
-  const maxX = window.innerWidth - btnWidth - padding;
-  const maxY = window.innerHeight - btnHeight - padding;
+  const minX = paddingX;
+  const maxX = Math.max(minX, window.innerWidth - btnWidth - paddingX);
+  
+  const minY = paddingTop;
+  const maxY = Math.max(minY, window.innerHeight - btnHeight - paddingBottom);
 
-  const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-  const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+  const randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
+  const randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
 
+  btnNon.style.position = 'fixed';
   btnNon.style.left = `${randomX}px`;
   btnNon.style.top = `${randomY}px`;
+  btnNon.style.zIndex = '9999';
 
   // Grow the OUI button!
   ouiScale += 0.35;
@@ -277,6 +286,7 @@ function dodgeNonButton(e) {
 
 btnNon.addEventListener('mouseenter', dodgeNonButton);
 btnNon.addEventListener('touchstart', dodgeNonButton, { passive: false });
+btnNon.addEventListener('pointerdown', dodgeNonButton);
 btnNon.addEventListener('click', dodgeNonButton);
 
 // --- Spawn Verified Cute Animated GIF Stickers ---
