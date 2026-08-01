@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Journée Internationale des Petites Amies 💖 - Une question très spéciale</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Canvas background for hearts & petals -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Container for dynamically spawned GIFs & Stickers -->
+  <div id="stickers-container"></div>
+
+  <!-- Music toggle button (active by default) -->
+  <button id="music-toggle" class="floating-btn playing" aria-label="Musique romantique">
+    <i class="fa-solid fa-music"></i>
+    <span class="pulse-ring"></span>
+  </button>
+
+  <main class="app-container">
+    <!-- Header Badge -->
+    <div class="badge-container">
+      <span class="girly-badge">
+        <i class="fa-solid fa-heart beat"></i> 1er Août • Journée Internationale des Petites Amies <i
+          class="fa-solid fa-heart beat"></i>
+      </span>
+    </div>
+
+    <!-- Main Proposal Card -->
+    <div class="proposal-card" id="proposal-card">
+      <img src="./gifs/bubu-happy0.gif" class="card-corner-gif top-left-gif" alt="Cute Bubu heart">
+      <img src="./gifs/cat-heart.gif" class="card-corner-gif top-right-gif" alt="Cute heart cat">
+
+      <div class="card-header">
+        <div class="header-gif-wrapper">
+          <img id="main-gif" src="./gifs/bubu-propose.gif" alt="Bubu & Dudu Proposal" class="header-gif">
+        </div>
+        <h1 class="romantic-title">Mon Coeur...</h1>
+        <p class="subtitle" id="dynamic-subtitle">J'ai quelque chose d'important à te demander 💕</p>
+      </div>
+
+      <div class="question-box">
+        <h2 class="proposal-text">Veux-tu être ma Femme pour la vie ? 💍✨</h2>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="buttons-wrapper" id="buttons-wrapper">
+        <button id="btn-oui" class="btn-girly btn-oui">
+          <span class="btn-text">OUI ! 💖</span>
+          <span class="sparkle s1">✨</span>
+          <span class="sparkle s2">🌸</span>
+          <span class="sparkle s3">💖</span>
+        </button>
+
+        <button id="btn-non" class="btn-girly btn-non">
+          <span class="btn-text">Non 🙈</span>
+        </button>
+      </div>
+
+      <!-- Counter & Pleading message -->
+      <div class="pleading-box" id="pleading-box">
+        <p id="pleading-text" class="pleading-text">Appuie sur <strong>OUI</strong> pour me rendre le plus heureux ! 🥰
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Celebration Modal / Success Overlay -->
+  <div id="celebration-modal" class="modal-overlay hidden">
+    <div class="celebration-card">
+      <div class="celebration-badge">✨ ELLE A DIT OUI ! ✨</div>
+      <div class="celebration-gif-box">
+        <img id="celebration-gif" src="./gifs/bubu-happy1.gif" alt="Bubu & Dudu Celebration" class="celebration-gif">
+      </div>
+      <h2 class="celebration-title">YAAAAAY ! 🎉💍❤️</h2>
+      <p class="celebration-subtitle">C'est officiel ! Tu as accepté de m'épouser ! 🥰✨</p>
+
+      <div class="love-letter">
+        <p>Joyeuse Journée Internationale des Petites Amies à la personne la plus incroyable du monde ! 🌹</p>
+        <p>Je me réjouis de passer toute ma vie à tes côtés, remplie de rires, d'amour, de câlins et de bonheur infini.
+          ❤️💍</p>
+      </div>
+
+      <div class="action-row">
+        <button id="btn-replay" class="btn-celebrate">
+          <i class="fa-solid fa-rotate-left"></i> Recommencer la magie ✨
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
